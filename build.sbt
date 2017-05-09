@@ -1,6 +1,7 @@
 import org.scalatra.sbt._
 import org.scalatra.sbt.PluginKeys._
 import ScalateKeys._
+import com.typesafe.sbt.packager.archetypes.JavaAppPackaging
 
 val ScalatraVersion = "2.5.0"
 
@@ -24,9 +25,10 @@ libraryDependencies ++= Seq(
 //  "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test",
   "org.scalatra" %% "scalatra-scalatest" % ScalatraVersion % "test",
   "ch.qos.logback" % "logback-classic" % "1.1.5" % "runtime",
-  "org.eclipse.jetty" % "jetty-webapp" % "9.2.15.v20160210" % "container",
+  "org.eclipse.jetty" % "jetty-webapp" % "9.2.15.v20160210" % "compile;container",
   "javax.servlet" % "javax.servlet-api" % "3.1.0" % "provided"
 )
+
 
 scalateTemplateConfig in Compile := {
   val base = (sourceDirectory in Compile).value
@@ -42,4 +44,4 @@ scalateTemplateConfig in Compile := {
   )
 }
 
-enablePlugins(JettyPlugin)
+enablePlugins(JettyPlugin, JavaAppPackaging)
