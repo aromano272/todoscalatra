@@ -2,6 +2,7 @@ package com.aromano.todo
 
 import com.aromano.todo.models.ErrorResponse
 import com.aromano.todo.models.Todo
+import com.aromano.todo.utils.MongoDBUtils
 import com.mongodb.casbah.Imports._
 import com.mongodb.util.JSON.serialize
 import org.scalatra.{BadRequest, MethodOverride, NotFound, Ok}
@@ -30,7 +31,7 @@ class TodoServlet(mongoColl: MongoCollection) extends TodoscalatraStack with Met
 
   get("/:id") {
     // read
-    val id = params("id");
+    val id = params("id")
 
     val errorMessage = new ErrorResponse("Couldn't find a todo with this id").toJson
 
@@ -47,7 +48,7 @@ class TodoServlet(mongoColl: MongoCollection) extends TodoscalatraStack with Met
     val obj = for (x <- mongoColl.findOne(query)) yield x
 
     if (obj.isDefined)
-      Ok(serialize(Todo.convertObjectIdToString(obj.get)))
+      Ok(serialize(MongoDBUtils.convertObjectIdToString(obj.get)))
     else
       BadRequest(errorMessage)
 
@@ -58,7 +59,7 @@ class TodoServlet(mongoColl: MongoCollection) extends TodoscalatraStack with Met
     mongoColl.find()
 
     val dbObj:Iterable[DBObject] = for { x <- mongoColl } yield {
-      Todo.convertObjectIdToString(x)
+      MongoDBUtils.convertObjectIdToString(x)
     }
 
     Ok(serialize(dbObj.toList))
@@ -71,22 +72,22 @@ class TodoServlet(mongoColl: MongoCollection) extends TodoscalatraStack with Met
 
     val todo = new Todo(title, description)
 
-    val newObj = MongoDBObject(todo.toJson())
+    val newObj = MongoDBObject(todo.toJson)
     mongoColl += newObj
 
-    Ok(serialize(Todo.convertObjectIdToString(newObj)))
+    Ok(serialize(MongoDBUtils.convertObjectIdToString(newObj)))
   }
 
   put("/:id") {
     // update
-    val id = params("id");
+    val id = params("id")
 
 
   }
 
   delete("/:id") {
     // delete
-    val id = params("id");
+    val id = params("id")
 
   }
 

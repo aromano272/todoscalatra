@@ -5,7 +5,7 @@ package com.aromano.todo.models
   */
 class ErrorResponse(val message: String) {
 
-  def toJson(): String = {
+  def toJson: String = {
     s"""{
       |   "error": {
       |     "message": "$message"

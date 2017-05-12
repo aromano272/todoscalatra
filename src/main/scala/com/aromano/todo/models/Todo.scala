@@ -16,7 +16,7 @@ class Todo(val id: String, val title: String, val description: String, val isCom
     this(null, title, description, false)
   }
 
-  def toJson(): String = {
+  def toJson: String = {
     if (id != null)
       s"""  {
          |    "_id": "$id",
@@ -49,12 +49,6 @@ object Todo {
     val isCompleted = dbObject.get("isCompleted").asInstanceOf[Boolean]
 
     new Todo(_id, title, description, isCompleted)
-  }
-
-  def convertObjectIdToString(dbObject: DBObject): DBObject = {
-    val _id = dbObject.get("_id").toString
-    dbObject.put("_id", _id)
-    dbObject
   }
 
 }
