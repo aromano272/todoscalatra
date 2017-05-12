@@ -16,6 +16,10 @@ class Todo(val id: String, val title: String, val description: String, val isCom
     this(null, title, description, false)
   }
 
+  def this(title: String, description:String, isCompleted: Boolean) {
+    this(null, title, description, isCompleted)
+  }
+
   def toJson: String = {
     if (id != null)
       s"""  {
